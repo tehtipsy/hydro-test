@@ -267,8 +267,8 @@ function getLocaleFromRequest(request: Request): I18nLocale {
   const firstPathPart = url.pathname.split('/')[1]?.toUpperCase() ?? '';
 
   let pathPrefix = '';
-  let language: LanguageCode = 'EN';
-  let country: CountryCode = 'US';
+  let language: LanguageCode = 'HA';
+  let country: CountryCode = 'IE';
 
   if (/^[A-Z]{2}-[A-Z]{2}$/i.test(firstPathPart)) {
     pathPrefix = '/' + firstPathPart;

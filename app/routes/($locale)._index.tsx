@@ -1,7 +1,8 @@
+import React, {Suspense, useState, useEffect, useRef} from 'react';
+
 import type {V2_MetaFunction} from '@shopify/remix-oxygen';
 import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
 import {Await, useLoaderData, Link} from '@remix-run/react';
-import {Suspense} from 'react';
 import {Image, Money} from '@shopify/hydrogen';
 import type {
   FeaturedCollectionFragment,
@@ -21,11 +22,55 @@ export async function loader({context}: LoaderArgs) {
   return defer({featuredCollection, recommendedProducts});
 }
 
+type Limits = {
+  [index: number]: number;
+};
+
+function convertY(currentY: number) {
+  if (currentY < 0) {
+    return 0;
+  }
+
+  // set ratio for a clean transition
+  const newY = Math.floor(currentY / 2);
+
+  const calacLimits = (start: number, end: number) =>
+    Array.from({length: end - start + 1}, (_, i) => start + i);
+
+  const limits = calacLimits(0, 100);
+
+  for (let i = 0; i < limits.length - 1; i++) {
+    if (newY < limits[i + 1]) {
+      return limits[i];
+    }
+  }
+  return limits[limits.length - 1];
+}
+
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
+
+  const [currentY, setCurrentY] = useState(0);
+
+  const handleScroll = () => {
+    setCurrentY(-convertY(window.scrollY));
+    // if (visualViewport)
+    //   setCurrentY(convertY(visualViewport.offsetTop));
+  };
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    // visualViewport?.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <div className="home">
-      <FeaturedCollection collection={data.featuredCollection} />
+      <FeaturedCollection
+        collection={data.featuredCollection}
+        style={{transform: `translateY(${currentY}%)`}}
+      />
       <RecommendedProducts products={data.recommendedProducts} />
     </div>
   );
@@ -33,14 +78,17 @@ export default function Homepage() {
 
 function FeaturedCollection({
   collection,
+  style,
 }: {
   collection: FeaturedCollectionFragment;
+  style: React.CSSProperties;
 }) {
   const image = collection.image;
   return (
     <Link
       className="featured-collection"
       to={`/collections/${collection.handle}`}
+      style={style}
     >
       {image && (
         <div className="featured-collection-image">
@@ -59,7 +107,7 @@ function RecommendedProducts({
 }) {
   return (
     <div className="recommended-products">
-      <h2>Recommended Products</h2>
+      <div className="border-t-4 border-red-700"></div>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {({products}) => (
@@ -136,7 +184,7 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
   }
   query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
     @inContext(country: $country, language: $language) {
-    products(first: 4, sortKey: UPDATED_AT, reverse: true) {
+    products(first: 24, sortKey: UPDATED_AT, reverse: true) {
       nodes {
         ...RecommendedProduct
       }

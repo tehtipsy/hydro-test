@@ -179,6 +179,8 @@ aside li {
 .footer {
   background: var(--color-dark);
   margin-top: auto;
+  position: sticky;
+  bottom: 0;
 }
 
 .footer-menu-missing {
@@ -302,10 +304,17 @@ aside li {
 * routes/__index
 * --------------------------------------------------
 */
-.featured-collection {
-  display: block;
-  margin-bottom: 2rem;
+.home {
+  overflow: hidden;
   position: relative;
+  scroll-snap-type: y mandatory;
+}
+
+.featured-collection {
+  height: calc(100vh - var(--header-height));
+  width: 100%;
+  position: absolute;
+  background: rgb(145, 140, 140);
 }
 
 .featured-collection-image {
@@ -321,6 +330,14 @@ aside li {
   object-fit: cover;
 }
 
+.recommended-products {
+  /* margin-top: calc((100vh - var(--header-height)) / 2); */
+  /* margin-top: calc((100vh) / 4); */
+  margin-top: 25vh;
+  height: auto;
+  scroll-snap-align: end;
+}
+
 .recommended-products-grid {
   display: grid;
   grid-gap: 1.5rem;
@@ -332,6 +349,10 @@ aside li {
 
 .recommended-product img {
   height: auto;
+}
+
+.recommended-product {
+    height: auto;
 }
 
 /*

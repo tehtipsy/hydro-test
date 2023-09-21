@@ -67,11 +67,14 @@ function ProductsGrid({products}: {products: ProductItemFragment[]}) {
     <div className="products-grid">
       {products.map((product, index) => {
         return (
-          <ProductItem
-            key={product.id}
-            product={product}
-            loading={index < 8 ? 'eager' : undefined}
-          />
+          <div>
+            <a> HELLO WORLD </a>
+            <ProductItem
+              key={product.id}
+              product={product}
+              loading={index < 8 ? 'eager' : undefined}
+            />
+          </div>
         );
       })}
     </div>
