@@ -324,6 +324,14 @@ aside li {
   background-repeat: repeat;
   background-position: bottom;
   /* transform: translateZ(999px); */ 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slogan {
+  color: rgb(65, 13, 27);
+  font-size: 2rem;
 }
 
 .featured-collection-image {

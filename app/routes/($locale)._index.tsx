@@ -65,10 +65,25 @@ export default function Homepage() {
 
   return (
     <div className="home">
-      <FeaturedCollection
-        collection={data.featuredCollection}
-        style={{transform: `translateY(${currentY}%)`}}
-      />
+      <div
+        className="featured-collection" 
+        style={{
+          // display: 'flex',
+          // alignItems: 'center',
+          // justifyContent: 'center',
+          transform: `translateY(${currentY}%)`,
+        }}
+      >
+        <p className="featured-collection slogan">
+          {'...'}
+          {'בואו לראות את המוצרים שלנו'}
+        </p>
+      </div>
+      {/* <div className="home">
+       <FeaturedCollection
+         collection={data.featuredCollection}
+         style={{transform: `translateY(${currentY}%)`}}
+    /> */}
       <RecommendedProducts products={data.recommendedProducts} />
     </div>
   );
