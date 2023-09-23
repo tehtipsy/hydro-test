@@ -32,7 +32,7 @@ function convertY(currentY: number) {
   }
 
   // set ratio for a clean transition
-  const newY = Math.floor(currentY / 2);
+  const newY = Math.floor(currentY / 4);
 
   const calacLimits = (start: number, end: number) =>
     Array.from({length: end - start + 1}, (_, i) => start + i);
@@ -49,17 +49,15 @@ function convertY(currentY: number) {
 
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
-
+  // replace scrollY with paralax-layers in CSS
   const [currentY, setCurrentY] = useState(0);
 
   const handleScroll = () => {
     setCurrentY(-convertY(window.scrollY));
-    // if (visualViewport)
-    //   setCurrentY(convertY(visualViewport.offsetTop));
   };
+
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
-    // visualViewport?.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -107,7 +105,6 @@ function RecommendedProducts({
 }) {
   return (
     <div className="recommended-products">
-      <div className="border-t-4 border-red-700"></div>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {({products}) => (

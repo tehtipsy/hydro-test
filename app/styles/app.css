@@ -308,13 +308,22 @@ aside li {
   overflow: hidden;
   position: relative;
   scroll-snap-type: y mandatory;
+  background-image: url(https://i.imgur.com/heYckBi.jpg);
+  background-size: 540px 540px;
+  background-repeat: repeat;
+  background-position: bottom;
+  /* perspective: 1px; */
 }
 
 .featured-collection {
   height: calc(100vh - var(--header-height));
   width: 100%;
   position: absolute;
-  background: rgb(145, 140, 140);
+  background-image: url(https://i.imgur.com/E6Uv84d.jpg);
+  background-size: 540px 540px;
+  background-repeat: repeat;
+  background-position: bottom;
+  /* transform: translateZ(999px); */ 
 }
 
 .featured-collection-image {
@@ -331,11 +340,15 @@ aside li {
 }
 
 .recommended-products {
-  /* margin-top: calc((100vh - var(--header-height)) / 2); */
-  /* margin-top: calc((100vh) / 4); */
-  margin-top: 25vh;
+  margin-top: 50vh;
   height: auto;
-  scroll-snap-align: end;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  background-image: url(https://i.imgur.com/heYckBi.jpg);
+  background-size: 540px 540px;
+  background-repeat: repeat;
+  background-position: bottom;
+  /* transform: translateZ(500px); */
 }
 
 .recommended-products-grid {
